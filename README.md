@@ -52,8 +52,10 @@ The application will open automatically at http://localhost:3000
 - **React Router v7** - Client-side routing
 - **Zustand** - Lightweight state management
 
-### UI & Icons
+### UI & Styling
 
+- **Tailwind CSS v4** - Utility-first CSS framework
+- **Catppuccin** - Beautiful pastel theme system (4 flavors)
 - **Lucide React** - Beautiful, consistent icon set
 
 ### Code Quality
@@ -70,14 +72,20 @@ The application will open automatically at http://localhost:3000
 save-guardian/
 ├── src/                    # Source code
 │   ├── assets/            # Static assets (images, fonts, etc.)
+│   ├── pages/             # Page components (routes)
 │   ├── App.tsx            # Root component
 │   ├── main.tsx           # Application entry point
-│   └── index.css          # Global styles
+│   ├── index.css          # Tailwind imports & custom styles
+│   └── theme.css          # Catppuccin theme definitions
+├── docs/                  # Documentation
+│   └── catppuccin-style-guide.md  # Theming guide
 ├── public/                # Public static files
 ├── dist/                  # Production build output
 ├── rust-legacy/           # Archived Rust implementation
 ├── .husky/                # Git hooks
 ├── eslint.config.js       # ESLint configuration
+├── postcss.config.js      # PostCSS configuration
+├── tailwind.config.ts     # Tailwind CSS configuration
 ├── tsconfig.json          # TypeScript project references
 ├── tsconfig.app.json      # TypeScript config for app code
 ├── tsconfig.node.json     # TypeScript config for Vite config
@@ -111,6 +119,36 @@ import { Component } from '@/components/Component';
 - Prettier enforces consistent code style
 - Both run automatically via Git hooks on commit
 
+### Tailwind CSS & Theming
+
+The project uses **Tailwind CSS v4** with the **Catppuccin** color palette for a beautiful, cohesive design system.
+
+**Theme Flavors:**
+- 🌞 **Latte** - Light theme for daytime
+- ☕ **Frappe** - Dark theme with soft tones
+- 🌙 **Macchiato** - Balanced dark theme
+- ✨ **Mocha** - Rich dark theme (default)
+
+**Features:**
+- Runtime theme switching without recompilation
+- 14 accent colors with semantic naming
+- Custom shadows, border radius, and transitions
+- CSS variables for all colors
+- Pre-styled `.btn` and `.card` component classes
+
+**Usage:**
+```typescript
+// Switch themes at runtime
+document.documentElement.setAttribute('data-theme', 'latte');
+
+// Use CSS variables for colors
+<div style={{ backgroundColor: 'var(--color-base)', color: 'var(--color-text)' }}>
+  Content
+</div>
+```
+
+See [`docs/catppuccin-style-guide.md`](docs/catppuccin-style-guide.md) for complete theming documentation.
+
 ## 🎯 Features (Roadmap)
 
 This is a fresh React implementation. The following features are planned:
@@ -119,7 +157,7 @@ This is a fresh React implementation. The following features are planned:
 - 🔐 **Backup & Restore** - Create and restore compressed backups
 - 🔄 **Save Synchronization** - Sync between Steam and non-Steam versions
 - ☁️ **Cloud Backup** - WebDAV cloud storage integration
-- 🎨 **Modern UI** - Clean, responsive interface with dark/light themes
+- ✅ **Modern UI** - Clean, responsive interface with Catppuccin theming
 - 🔍 **Search & Filter** - Quickly find your game saves
 
 ## 🧪 Git Hooks
