@@ -1,249 +1,270 @@
 # 🛡️ Save Guardian
 
-A sleek, modern save manager for Steam and non-Steam games built in Rust with a beautiful GUI.
+A modern save manager for Steam and non-Steam games, rebuilt with React, TypeScript, and Vite.
 
-## Features
-
-✨ **Automatic Save Detection**
-- Scans Steam userdata folders automatically
-- Detects saves in common locations (Documents, AppData, etc.)
-- Recognizes game names and Steam App IDs
-- Supports custom save locations
-
-🔐 **Backup & Restore**
-- Create compressed backups of game saves
-- Restore saves from any backup point  
-- Automatic cleanup of old backups
-- Backup with custom descriptions and metadata
-
-🔄 **Save Synchronization**
-- Sync saves between Steam and non-Steam versions
-- Intelligent game matching by name and App ID
-- Bidirectional sync based on modification times
-- Automatic backup before sync operations
-
-🎨 **Modern UI**
-- Clean, intuitive interface built with egui
-- Dark/Light/System theme support
-- Search and filter capabilities
-- Real-time scanning progress
-
-## Screenshots
-
-![Main Interface](docs/screenshot-main.png)
-![Backup Management](docs/screenshot-backups.png)
-![Sync Interface](docs/screenshot-sync.png)
-
-## Installation
+## 🚀 Quick Start
 
 ### Prerequisites
 
-- Windows 10/11 (primary support)
-- Steam installed (for Steam save detection)
+- **Node.js** v18+ (v20+ recommended)
+- **pnpm** v8+ (install via `npm install -g pnpm`)
 
-### Download
-
-1. Download the latest release from the [Releases page](https://github.com/username/save-guardian/releases)
-2. Extract the ZIP file
-3. Run `save-guardian.exe`
-
-### Build from Source
+### Development Setup
 
 ```bash
 # Clone the repository
 git clone https://github.com/username/save-guardian.git
 cd save-guardian
 
-# Build the project
-cargo build --release
+# Install dependencies
+pnpm install
 
-# Run the application
-cargo run --release
+# Start development server
+pnpm dev
 ```
 
-## Usage
+The application will open automatically at http://localhost:3000
 
-### Initial Setup
+## 📦 Available Scripts
 
-1. **Launch Save Guardian**
-2. **Configure Paths** in Settings:
-   - Steam userdata path (usually auto-detected)
-   - Backup directory (defaults to Documents/SaveGuardianBackups)
-3. **Click Refresh** to scan for saves
+| Script              | Description                         |
+| ------------------- | ----------------------------------- |
+| `pnpm dev`          | Start Vite dev server with HMR      |
+| `pnpm build`        | Build for production (type-checked) |
+| `pnpm preview`      | Preview production build locally    |
+| `pnpm lint`         | Run ESLint (fails on warnings)      |
+| `pnpm lint:fix`     | Auto-fix linting issues             |
+| `pnpm format`       | Format code with Prettier           |
+| `pnpm format:check` | Check code formatting               |
+| `pnpm typecheck`    | Run TypeScript type checking        |
+| `pnpm test`         | Run tests (placeholder for now)     |
 
-### Managing Game Saves
+## 🏗️ Tech Stack
 
-1. **Game Saves Tab** shows all detected saves
-2. **Search** for specific games or filter by type
-3. **Backup** individual saves with custom descriptions
-4. **Open** save directories in Windows Explorer
+### Core
 
-### Backup Management
+- **React 19** - UI library with modern JSX runtime
+- **TypeScript 5.9** - Type safety with strict mode
+- **Vite 7** - Lightning-fast build tool and dev server
 
-1. **Backups Tab** shows all created backups
-2. **Restore** saves from any backup point
-3. **Delete** old or unnecessary backups
-4. **Cleanup Old** automatically removes backups older than retention period
+### Routing & State
 
-### Save Synchronization
+- **React Router v7** - Client-side routing
+- **Zustand** - Lightweight state management
 
-1. **Sync Tab** shows potential sync pairs
-2. **Find Pairs** to automatically detect matching games
-3. **Sync** saves between Steam and non-Steam versions
-4. Choose sync direction or use automatic bidirectional sync
+### UI & Icons
 
-## Supported Save Locations
+- **Lucide React** - Beautiful, consistent icon set
 
-### Steam Saves
-- `C:\Program Files (x86)\Steam\userdata\{USER_ID}\{APP_ID}\remote\`
-- Additional Steam Cloud locations
+### Code Quality
 
-### Non-Steam Saves
-- `Documents\My Games\`
-- `Documents\{Publisher}\{Game}\`
-- `Documents\Rockstar Games\`
-- `AppData\Roaming\{Game}\`
-- `AppData\Local\{Game}\`
-- `AppData\LocalLow\{Company}\{Game}\` (Unity games)
-- `C:\Users\Public\Documents\`
-- `AppData\Roaming\Goldberg SteamEmu Saves\`
-- Game installation directories
-- Custom locations (user-defined)
+- **ESLint 9** - Code linting with flat config
+- **Prettier** - Code formatting
+- **TypeScript ESLint** - TypeScript-specific linting rules
+- **Husky** - Git hooks for pre-commit checks
+- **lint-staged** - Run linters on staged files only
 
-## Configuration
+## 📁 Project Structure
 
-Settings are automatically saved and include:
-
-```toml
-# Steam installation path
-steam_path = "C:\\Program Files (x86)\\Steam\\userdata"
-
-# Backup storage location  
-backup_path = "C:\\Users\\{User}\\Documents\\SaveGuardianBackups"
-
-# Backup retention period (days)
-backup_retention_days = 30
-
-# Automatic backup before operations
-auto_backup = true
-
-# UI theme
-theme = "Dark" # "Light", "Dark", or "System"
-
-# Window size and position
-window_size = [1200.0, 800.0]
+```
+save-guardian/
+├── src/                    # Source code
+│   ├── assets/            # Static assets (images, fonts, etc.)
+│   ├── App.tsx            # Root component
+│   ├── main.tsx           # Application entry point
+│   └── index.css          # Global styles
+├── public/                # Public static files
+├── dist/                  # Production build output
+├── rust-legacy/           # Archived Rust implementation
+├── .husky/                # Git hooks
+├── eslint.config.js       # ESLint configuration
+├── tsconfig.json          # TypeScript project references
+├── tsconfig.app.json      # TypeScript config for app code
+├── tsconfig.node.json     # TypeScript config for Vite config
+├── vite.config.ts         # Vite configuration
+├── .prettierrc            # Prettier configuration
+├── .editorconfig          # Editor configuration
+└── package.json           # Project dependencies and scripts
 ```
 
-## Architecture
+## ⚙️ Configuration
 
-Save Guardian is built with a modular architecture:
+### TypeScript
 
-- **`types.rs`** - Core data structures and error types
-- **`steam.rs`** - Steam save detection and scanning
-- **`non_steam.rs`** - Non-Steam save location scanning
-- **`backup.rs`** - Backup creation, restoration, and management
-- **`sync.rs`** - Save synchronization between Steam/non-Steam
-- **`gui.rs`** - Modern UI implementation with egui
-- **`config.rs`** - Configuration management
+The project uses strict TypeScript settings with path aliases:
 
-## Supported Games
+```typescript
+// Use @ alias for clean imports
+import { Component } from '@/components/Component';
+```
 
-Save Guardian works with thousands of games including:
+### Vite
 
-- **Steam Games**: All games with Steam Cloud saves
-- **Non-Steam Games**: Most PC games that store saves in standard locations
-- **Cracked Games**: Games using common emulators like Goldberg
-- **Unity Games**: Games storing data in LocalLow
-- **Rockstar Games**: GTA series, Red Dead Redemption, etc.
-- **EA Games**: Games storing saves in Documents
-- **Ubisoft Games**: Games with standard save patterns
+- **Port**: 3000
+- **Auto-open**: Browser opens automatically on start
+- **Path aliases**: `@` resolves to `./src`
+- **Source maps**: Enabled in production builds
 
-## ⚠️ Known Issues
+### ESLint & Prettier
 
-### Game Name Display Issue
+- ESLint runs with zero warnings tolerance
+- Prettier enforces consistent code style
+- Both run automatically via Git hooks on commit
 
-**Issue**: Some games may display incorrect names in the main game list (e.g., generic names like "Satisfactory" instead of the actual game name).
+## 🎯 Features (Roadmap)
 
-**Workaround**: 
-1. **Use the search box** - Type the game name in the search box, then click backup. This ensures correct names are used.
-2. **Use the Refresh button** - Click the "↻ Refresh" button to force update all game names.
-3. **Automatic fix** - The app will automatically attempt to fix incorrect names on startup.
+This is a fresh React implementation. The following features are planned:
 
-**Why this happens**: This occurs when cached game names haven't been updated from the Steam API yet. The search function triggers a refresh that fixes the names.
+- ✨ **Automatic Save Detection** - Scan Steam and non-Steam game saves
+- 🔐 **Backup & Restore** - Create and restore compressed backups
+- 🔄 **Save Synchronization** - Sync between Steam and non-Steam versions
+- ☁️ **Cloud Backup** - WebDAV cloud storage integration
+- 🎨 **Modern UI** - Clean, responsive interface with dark/light themes
+- 🔍 **Search & Filter** - Quickly find your game saves
 
-## Troubleshooting
+## 🧪 Git Hooks
 
-### Steam Saves Not Detected
-- Verify Steam is installed and has been run at least once
-- Check Steam userdata path in Settings
-- Ensure you have saves for the games (play them first)
+Pre-commit hooks automatically run:
 
-### Non-Steam Saves Missing
-- Check if games store saves in non-standard locations
-- Add custom save locations in Settings
-- Some games may use registry or other storage methods
+1. **lint-staged** - Lints and formats only staged files
+2. **TypeScript** - Type checks (via ESLint)
+3. **Prettier** - Code formatting
 
-### Backup/Restore Issues
-- Ensure backup directory has sufficient space
-- Check file permissions on save directories
-- Some games may lock save files while running
-
-### Sync Problems
-- Ensure both save locations exist and are accessible
-- Games must be closed during sync operations
-- Check that save formats are compatible between versions
-
-## Contributing
-
-We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
-
-### Development Setup
+To bypass hooks (not recommended):
 
 ```bash
-# Install Rust toolchain
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-
-# Clone and build
-git clone https://github.com/username/save-guardian.git
-cd save-guardian
-cargo run
+git commit --no-verify
 ```
 
-### Adding New Save Locations
+## 🏛️ Architecture
 
-To add support for new save locations:
+### Migration from Rust
 
-1. Update `non_steam.rs` with new location patterns
-2. Add game-specific detection logic
-3. Test with multiple games
-4. Update documentation
+The original Rust/egui implementation has been archived in `rust-legacy/`. The new React stack provides:
 
-## License
+- Cross-platform web deployment
+- Modern UI component ecosystem
+- Easier contribution pathway
+- Hot module replacement for faster development
+
+### Design Principles
+
+- **Type Safety** - Strict TypeScript throughout
+- **Component Composition** - Reusable, testable components
+- **Performance** - Code splitting and lazy loading
+- **Accessibility** - WCAG compliant UI components
+
+## 🤝 Contributing
+
+We welcome contributions! Please follow these guidelines:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feat/amazing-feature`)
+3. Make your changes with clear commits
+4. Ensure all checks pass (`pnpm lint && pnpm build`)
+5. Push your branch and open a Pull Request
+
+### Code Style
+
+- Follow the existing TypeScript/React patterns
+- Use functional components with hooks
+- Keep components small and focused
+- Add types for all props and state
+- Write meaningful commit messages
+
+## 📝 Development Notes
+
+### Path Aliases
+
+Use the `@` alias for imports:
+
+```typescript
+// ✅ Good
+import { Button } from '@/components/Button';
+
+// ❌ Avoid
+import { Button } from '../../components/Button';
+```
+
+### Component Structure
+
+Follow this structure for new components:
+
+```typescript
+// components/MyComponent.tsx
+import { FC } from 'react';
+
+interface MyComponentProps {
+  title: string;
+  onAction?: () => void;
+}
+
+export const MyComponent: FC<MyComponentProps> = ({ title, onAction }) => {
+  return (
+    <div>
+      <h2>{title}</h2>
+      {onAction && <button onClick={onAction}>Action</button>}
+    </div>
+  );
+};
+```
+
+### State Management
+
+- **Local state**: Use `useState` for component-specific state
+- **Shared state**: Use Zustand stores for cross-component state
+- **URL state**: Use React Router for navigation state
+
+## 🐛 Troubleshooting
+
+### Installation Issues
+
+```bash
+# Clear node_modules and reinstall
+rm -rf node_modules pnpm-lock.yaml
+pnpm install
+```
+
+### Build Errors
+
+```bash
+# Check TypeScript errors
+pnpm typecheck
+
+# Check linting errors
+pnpm lint
+```
+
+### Port Already in Use
+
+Edit `vite.config.ts` to change the port:
+
+```typescript
+server: {
+  port: 3001, // or any available port
+}
+```
+
+## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Acknowledgments
+## 🙏 Acknowledgments
 
-- Built with [egui](https://github.com/emilk/egui) for the modern GUI
-- Uses [walkdir](https://github.com/BurntSushi/walkdir) for efficient directory traversal
-- Inspired by game save managers like GameSave Manager
+- Built with [Vite](https://vitejs.dev/) for lightning-fast development
+- UI powered by [React](https://react.dev/) and [Lucide Icons](https://lucide.dev/)
+- Previous Rust implementation using [egui](https://github.com/emilk/egui)
 
-## Roadmap
+## 🗺️ Roadmap
 
-- [ ] Support for Linux and macOS
-- [ ] Cloud backup integration (Google Drive, Dropbox, etc.)
-- [ ] Automatic save monitoring and backup
-- [ ] Game launcher integration
-- [ ] Save file diff and merge capabilities
-- [ ] Portable mode for USB drives
-- [ ] Command line interface
-- [ ] Save game screenshots and metadata
-
-## Support
-
-- 🐛 **Bug Reports**: [Issues page](https://github.com/username/save-guardian/issues)
-- 💡 **Feature Requests**: [Discussions page](https://github.com/username/save-guardian/discussions)  
-- 📧 **Contact**: [your.email@example.com](mailto:your.email@example.com)
+- [ ] Set up basic UI layout and routing
+- [ ] Implement game save scanning
+- [ ] Add backup/restore functionality
+- [ ] Build sync engine
+- [ ] Integrate cloud storage
+- [ ] Add automated testing
+- [ ] Create Electron or Tauri wrapper for desktop app
+- [ ] Implement Progressive Web App (PWA) features
 
 ---
 
